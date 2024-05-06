@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - SwiftUI
 extension Image {
     static let systemLocation = Image(systemName: "location.fill")
     static let systemWarning = Image(systemName: "exclamationmark.triangle.fill")

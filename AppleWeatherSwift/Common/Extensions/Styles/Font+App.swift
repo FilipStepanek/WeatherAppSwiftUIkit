@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - SwiftUI
 extension Font {
     private static let interBold = "Inter-Bold"
     private static let interMedium = "Inter-Medium"
@@ -73,4 +74,9 @@ extension Font {
     
     // Medium Title Temperature Apple Watch - Forecast
     static let contentSmallWatch = (custom(Self.interMedium, size: Self.FontSize.contentSmall.rawValue))
+}
+
+// MARK: - UIKit
+extension UIFont {
+    
 }

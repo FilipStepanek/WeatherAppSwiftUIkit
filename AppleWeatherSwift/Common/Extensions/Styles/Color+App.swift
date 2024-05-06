@@ -5,4 +5,9 @@
 //  Created by Filip Štěpánek on 06.05.2024.
 //
 
-import Foundation
+import SwiftUI
+
+//MARK: - UIKit
+extension UIColor {
+    
+}
