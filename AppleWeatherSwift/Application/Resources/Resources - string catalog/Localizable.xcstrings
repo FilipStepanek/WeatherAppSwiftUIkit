@@ -102,9 +102,6 @@
         }
       }
     },
-    "Configuration" : {
-
-    },
     "day.clear.sky.message" : {
       "localizations" : {
         "cs" : {
@@ -232,9 +229,6 @@
           }
         }
       }
-    },
-    "Favorite Emoji" : {
-
     },
     "few.clouds.message" : {
       "localizations" : {
@@ -492,9 +486,6 @@
         }
       }
     },
-    "My Widget" : {
-
-    },
     "night.clear.sky.message" : {
       "localizations" : {
         "cs" : {
@@ -642,12 +633,6 @@
           }
         }
       }
-    },
-    "This is an example widget" : {
-
-    },
-    "This is an example widget." : {
-
     },
     "thunderstorm.message" : {
       "localizations" : {
