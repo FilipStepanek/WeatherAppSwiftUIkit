@@ -279,6 +279,7 @@
       }
     },
     "forecast.header.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -517,9 +518,6 @@
           }
         }
       }
-    },
-    "Now" : {
-
     },
     "permission.Message" : {
       "localizations" : {

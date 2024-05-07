@@ -56,15 +56,15 @@
 				<key>location-parameters</key>
 				<dict>
 					<key>EndingColumnNumber</key>
-					<string>64</string>
+					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>46</string>
+					<string>20</string>
 					<key>StartingColumnNumber</key>
-					<string>63</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>46</string>
+					<string>20</string>
 					<key>Timestamp</key>
-					<string>732095956.206975</string>
+					<string>736701460.480924</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -82,17 +82,15 @@
 				<key>focused</key>
 				<string></string>
 				<key>leading</key>
-				<string>                ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(Array(groupedData.keys.sorted().enumerated()), id: \.1) { dayIndex, dateString in
-                        let forecasts = groupedData[dateString]!</string>
+				<string>    }
+}
+</string>
 				<key>trailing</key>
 				<string>
-                        
-                        LazyVGrid(columns: columns, spacing: 8, pinnedViews: [.sectionHeaders]) {
+#if DEBUG
+#Preview {
 </string>
 			</dict>
-			<key>title</key>
-			<string>there is ! why?</string>
 			<key>type</key>
 			<string>bookmark</string>
 		</dict>

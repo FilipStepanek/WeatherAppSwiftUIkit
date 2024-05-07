@@ -73,3 +73,42 @@ struct HeadlineThreeModifier: ViewModifier {
             .foregroundColor(.mainText)
     }
 }
+
+// MARK: - UIKit
+
+let titleLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.contentMediumBase
+    label.textColor = .mainText
+    return label
+}()
+
+let infoLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.contentInfoSmallBase
+    label.textColor = .contentRegular
+    return label
+}()
+
+let temperatureLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.headlineThreeBase
+    label.textColor = .mainText
+    return label
+}()
+
+let dayLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.dayInfoBase
+    label.textColor = .mainText
+    return label
+}()
+
+let dateLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.contentInfoSmallBase
+    label.textColor = .contentRegular
+    return label
+}()

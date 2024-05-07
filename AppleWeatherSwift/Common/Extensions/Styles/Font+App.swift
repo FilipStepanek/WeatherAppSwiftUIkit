@@ -78,5 +78,30 @@ extension Font {
 
 // MARK: - UIKit
 extension UIFont {
+    private static let interBold = "Inter-Bold"
+    private static let interMedium = "Inter-Medium"
+    private static let interSemibold = "Inter-SemiBold"
     
+    enum FontSize: CGFloat {
+        case headLine2 = 40
+        case headLine3 = 32
+        case contentRegular = 16
+        case contentSmall = 14
+        case dayInfoFont = 20
+    }
+    
+    static let contentInfoSmallBase = UIFont(name: interMedium, size: FontSize.contentSmall.rawValue)!
+    static let contentInfoSmall = UIFontMetrics(forTextStyle: .body).scaledFont(for: contentInfoSmallBase)
+    
+    static let contentMediumBase = UIFont(name: interMedium, size: FontSize.contentRegular.rawValue)!
+    static let contentMedium = UIFontMetrics(forTextStyle: .title3).scaledFont(for: contentMediumBase)
+    
+    static let headlineThreeBase = UIFont(name: interSemibold, size: FontSize.headLine3.rawValue)!
+    static let headlineThree = UIFontMetrics(forTextStyle: .largeTitle).scaledFont(for: headlineThreeBase)
+    
+    static let dayInfoBase = UIFont(name: interSemibold, size: FontSize.dayInfoFont.rawValue)!
+    static let dayInfo = UIFontMetrics(forTextStyle: .title2).scaledFont(for: dayInfoBase)
+    
+    static let headlineTwoBase = UIFont(name: interBold, size: FontSize.headLine2.rawValue)!
+    static let headlineTwo = UIFontMetrics(forTextStyle: .largeTitle).scaledFont(for: headlineTwoBase)
 }
