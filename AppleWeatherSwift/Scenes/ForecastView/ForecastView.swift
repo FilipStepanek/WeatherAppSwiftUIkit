@@ -20,7 +20,8 @@ struct ForecastView: View {
             case .missingLocation:
                 EnableLocationView()
             case .success(let forecastResponse, let currentResponse ):
-                ForecastViewRepresentable()
+                ForecastViewControllerWrapper()
+//                ForecastViewRepresentableWrapper(weatherNow: currentResponse, weather: forecastResponse)
             case .error:
                 ErrorFetchingDataView()
             case .errorNetwork:

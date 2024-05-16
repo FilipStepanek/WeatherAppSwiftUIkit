@@ -7,11 +7,48 @@
 
 import UIKit
 
-class ForecastDetailNowView: UIView {
+class ForecastDetailNowView: UICollectionViewCell {
     
     let weatherNow: CurrentResponse
     
     // UI Components
+    
+    private let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let circularImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 24 // Half of the maximum width or height
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = UIColor.iconBase
+        imageView.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+        return imageView
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.contentMediumBase
+        label.textColor = .mainText
+        return label
+    }()
+
+    private let infoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.contentInfoSmallBase
+        label.textColor = .contentRegular
+        return label
+    }()
+
+    private let temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.headlineThreeBase
+        label.textColor = .mainText
+        return label
+    }()
     
     init(weatherNow: CurrentResponse) {
         self.weatherNow = weatherNow

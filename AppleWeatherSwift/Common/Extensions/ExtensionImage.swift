@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+// MARK: - SwiftUI
+
 // MARK: - Extension for TodayDetailInfo view
 extension Image {
     func imageFrameShape() -> some View {
@@ -25,3 +27,4 @@ extension Image {
             .aspectRatio(contentMode: .fit)
     }
 }
+
