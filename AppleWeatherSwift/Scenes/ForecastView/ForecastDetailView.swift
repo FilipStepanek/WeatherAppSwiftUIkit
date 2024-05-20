@@ -58,6 +58,12 @@ class ForecastDetailView: UICollectionViewCell {
         configure(with: weather)
     }
     
+    override init(frame: CGRect) {
+          self.weather = ForecastResponse.ListResponse(date: 0, main: ForecastResponse.MainResponseForecast(temp: 0), weather: [])
+          super.init(frame: frame)
+          setupViews()
+      }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -92,7 +98,7 @@ class ForecastDetailView: UICollectionViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 28.8),
             iconImageView.heightAnchor.constraint(equalToConstant: 28.8),
             
-            titleLabel.topAnchor.constraint(equalTo: circularImageView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: circularImageView.topAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: circularImageView.trailingAnchor, constant: 17),
             
             infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
@@ -103,20 +109,19 @@ class ForecastDetailView: UICollectionViewCell {
         ])
     }
     
-    private func configure(with weather: ForecastResponse.ListResponse) {
+    func configure(with weather: ForecastResponse.ListResponse) {
         iconImageView.image = UIImage(named: WeatherManagerExtension().getImageNameFromForecastIcon(icon: weather.weather.first?.icon ?? ""))
         titleLabel.text = Date.formatUnixTimestampInGMT(weather.date)
         infoLabel.text = WeatherManagerExtension().getWeatherInfoFromForecastIcon(icon: weather.weather.first?.icon ?? "")
-        temperatureLabel.text = temperatureUnitSymbol()
+        temperatureLabel.text = formatTemperature(weather.main.temp)
     }
-    
-    
-    private func temperatureUnitSymbol() -> String {
+
+    private func formatTemperature(_ temperature: Double) -> String {
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.numberFormatter.maximumFractionDigits = 0
         
-        let temperature = Measurement(value: weather.main.temp, unit: UnitTemperature.celsius)
-        return measurementFormatter.string(from: temperature)
+        let temperatureValue = Measurement(value: temperature, unit: UnitTemperature.celsius)
+        return measurementFormatter.string(from: temperatureValue)
     }
 }
 

@@ -9,10 +9,9 @@ import UIKit
 
 class ForecastDetailNowView: UICollectionViewCell {
     
-    let weatherNow: CurrentResponse
+    var weatherNow: CurrentResponse?
     
     // UI Components
-    
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -35,14 +34,14 @@ class ForecastDetailNowView: UICollectionViewCell {
         label.textColor = .mainText
         return label
     }()
-
+    
     private let infoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.contentInfoSmallBase
         label.textColor = .contentRegular
         return label
     }()
-
+    
     private let temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.headlineThreeBase
@@ -50,14 +49,12 @@ class ForecastDetailNowView: UICollectionViewCell {
         return label
     }()
     
-    init(weatherNow: CurrentResponse) {
-        self.weatherNow = weatherNow
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
-        updateUI()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -80,7 +77,6 @@ class ForecastDetailNowView: UICollectionViewCell {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             circularImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             circularImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             circularImageView.widthAnchor.constraint(equalToConstant: 48),
@@ -91,7 +87,7 @@ class ForecastDetailNowView: UICollectionViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 28.8),
             iconImageView.heightAnchor.constraint(equalToConstant: 28.8),
             
-            titleLabel.topAnchor.constraint(equalTo: circularImageView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: circularImageView.topAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: circularImageView.trailingAnchor, constant: 17),
             
             infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
@@ -102,9 +98,13 @@ class ForecastDetailNowView: UICollectionViewCell {
         ])
     }
     
-
+    func configure(with weatherNow: CurrentResponse) {
+        self.weatherNow = weatherNow
+        updateUI()
+    }
     
     private func updateUI() {
+        guard let weatherNow = weatherNow else { return }
         iconImageView.image = UIImage(named: WeatherManagerExtension().getImageNameFromForecastIcon(icon: weatherNow.weather.first?.icon ?? ""))
         titleLabel.text = "Now"
         infoLabel.text = WeatherManagerExtension().getWeatherInfoFromForecastIcon(icon: weatherNow.weather.first?.icon ?? "")
@@ -115,10 +115,11 @@ class ForecastDetailNowView: UICollectionViewCell {
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.numberFormatter.maximumFractionDigits = 0
         
-        let temperature = Measurement(value: weatherNow.main.temp, unit: UnitTemperature.celsius)
+        let temperature = Measurement(value: weatherNow?.main.temp ?? 0.0, unit: UnitTemperature.celsius)
         return measurementFormatter.string(from: temperature)
     }
 }
+
 
 import SwiftUI
 
@@ -128,11 +129,13 @@ struct ForecastDetailNowViewWrapper: UIViewRepresentable {
     let weatherNow: CurrentResponse
     
     func makeUIView(context: Context) -> ForecastDetailNowView {
-        return ForecastDetailNowView(weatherNow: weatherNow)
+        let forecastDetailNowView = ForecastDetailNowView()
+        forecastDetailNowView.configure(with: weatherNow)
+        return forecastDetailNowView
     }
     
     func updateUIView(_ uiView: ForecastDetailNowView, context: Context) {
-        // Update the view if needed
+        uiView.configure(with: weatherNow)
     }
 }
 
