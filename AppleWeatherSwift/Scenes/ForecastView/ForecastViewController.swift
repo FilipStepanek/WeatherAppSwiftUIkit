@@ -5,8 +5,6 @@
 //  Created by Filip Štěpánek on 13.05.2024.
 //
 
-// Add UIViewCollectionController as subbview to UIViewcontroller
-
 import SwiftUI
 import UIKit
 
@@ -21,14 +19,31 @@ struct ForecastViewControllerWrapper: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: ForecastViewController, context: Context) {
-        // Update any properties if needed
+        // Update the view controller with new data if it has changed
+        if uiViewController.weather != weather || uiViewController.weatherNow != weatherNow {
+            uiViewController.weather = weather
+            uiViewController.weatherNow = weatherNow
+            
+            // Update grouped data and reload collection view
+            uiViewController.groupedData = uiViewController.groupForecastDataByDate()
+            uiViewController.collectionView.reloadData()
+        }
     }
 }
 
 class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    var weather: ForecastResponse
-    var weatherNow: CurrentResponse
+    var weather: ForecastResponse {
+            didSet {
+                // Any additional setup when weather is set, if needed
+            }
+        }
+        
+        var weatherNow: CurrentResponse {
+            didSet {
+                // Any additional setup when weatherNow is set, if needed
+            }
+        }
     
     fileprivate lazy var customNavigationBar: UILabel = {
         let label = UILabel()
@@ -148,8 +163,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         }
         
         return groupedData
-        
-        print("Grouped data: \(groupedData)")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -177,23 +190,25 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let itemCount = groupedData[dateString]?.count ?? 0
         print("Number of items in section \(section): \(itemCount)")
         
-        return itemCount
+        return section == 0 ? itemCount + 1 : itemCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 && indexPath.item == 0 {
+            // Return the ForecastDetailNowView for the first item in the first section
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nowCell", for: indexPath) as! ForecastDetailNowView
-            // You may need to provide the necessary data to configure the ForecastDetailNowView
-            cell.configure(with: weatherNow) // Assuming you have a `current` property in your `weather` model
+            cell.configure(with: weatherNow)
             return cell
         } else {
+            // Adjust index for the first section to account for the ForecastDetailNowView
+            let adjustedItemIndex = indexPath.section == 0 ? indexPath.item - 1 : indexPath.item
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastDetailView
             
             let dates = Array(groupedData.keys.sorted())
             let dateString = dates[indexPath.section]
             
             if let forecasts = groupedData[dateString] {
-                let forecast = forecasts[indexPath.item]
+                let forecast = forecasts[adjustedItemIndex]
                 cell.configure(with: forecast)
             }
             
@@ -229,3 +244,4 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     )
 }
 #endif
+

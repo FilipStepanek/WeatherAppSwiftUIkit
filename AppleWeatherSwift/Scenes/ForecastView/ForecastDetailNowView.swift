@@ -21,7 +21,7 @@ class ForecastDetailNowView: UICollectionViewCell {
     private let circularImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 24 // Half of the maximum width or height
+        imageView.layer.cornerRadius = 24
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor.iconBase
         imageView.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
@@ -82,8 +82,8 @@ class ForecastDetailNowView: UICollectionViewCell {
             circularImageView.widthAnchor.constraint(equalToConstant: 48),
             circularImageView.heightAnchor.constraint(equalToConstant: 48),
             
-            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24.4),
-            iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            iconImageView.centerXAnchor.constraint(equalTo: circularImageView.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: circularImageView.centerYAnchor),
             iconImageView.widthAnchor.constraint(equalToConstant: 28.8),
             iconImageView.heightAnchor.constraint(equalToConstant: 28.8),
             
@@ -120,7 +120,7 @@ class ForecastDetailNowView: UICollectionViewCell {
     }
 }
 
-
+#if DEBUG
 import SwiftUI
 
 struct ForecastDetailNowViewWrapper: UIViewRepresentable {
@@ -139,11 +139,9 @@ struct ForecastDetailNowViewWrapper: UIViewRepresentable {
     }
 }
 
-#if DEBUG
 struct ForecastDetailNowViewWrapper_Previews: PreviewProvider {
     static var previews: some View {
         ForecastDetailNowViewWrapper(weatherNow: .previewMock)
     }
 }
 #endif
-

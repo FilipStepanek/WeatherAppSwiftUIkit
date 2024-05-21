@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import SwiftUI
 
 class ForecastDetailView: UICollectionViewCell {
 
     let weather: ForecastResponse.ListResponse
     
     // UI Components
-    
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -93,8 +91,8 @@ class ForecastDetailView: UICollectionViewCell {
             circularImageView.widthAnchor.constraint(equalToConstant: 48),
             circularImageView.heightAnchor.constraint(equalToConstant: 48),
             
-            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24.4),
-            iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            iconImageView.centerXAnchor.constraint(equalTo: circularImageView.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: circularImageView.centerYAnchor),
             iconImageView.widthAnchor.constraint(equalToConstant: 28.8),
             iconImageView.heightAnchor.constraint(equalToConstant: 28.8),
             
@@ -125,6 +123,8 @@ class ForecastDetailView: UICollectionViewCell {
     }
 }
 
+#if DEBUG
+import SwiftUI
 struct ForecastDetailViewWrapper: UIViewRepresentable {
     typealias UIViewType = ForecastDetailView
     
@@ -139,7 +139,6 @@ struct ForecastDetailViewWrapper: UIViewRepresentable {
     }
 }
 
-#if DEBUG
 struct ForecastDetailViewWrapper_Previews: PreviewProvider {
     static var previews: some View {
         let mockListResponse = ForecastResponse.ListResponse(date: 1702749600, main: ForecastResponse.MainResponseForecast(temp: 30), weather: [])

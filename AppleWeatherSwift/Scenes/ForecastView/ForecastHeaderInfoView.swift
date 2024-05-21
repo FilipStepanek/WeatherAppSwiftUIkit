@@ -89,6 +89,7 @@ class ForecastHeaderInfoView: UICollectionReusableView {
     }
 }
 
+#if DEBUG
 import SwiftUI
 
 struct ForecastHeaderInfoViewWrapper: UIViewRepresentable {
@@ -109,7 +110,7 @@ struct ForecastHeaderInfoViewWrapper: UIViewRepresentable {
     }
 }
 
-#if DEBUG
+
 struct ForecastHeaderInfoViewWrapper_Previews: PreviewProvider {
     static var previews: some View {
         ForecastHeaderInfoViewWrapper(dayIndex: 0)

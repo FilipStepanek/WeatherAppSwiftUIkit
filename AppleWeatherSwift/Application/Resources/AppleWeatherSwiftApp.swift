@@ -7,11 +7,13 @@
 
 import SwiftUI
 import Factory
+import UIKit
 
 
 @main
 @MainActor
 struct AppleWeatherSwiftApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -30,5 +32,14 @@ extension Container {
         Factory(self) {
             LocationManager()
         }
+    }
+}
+
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Ensure the idle timer is not disabled
+        application.isIdleTimerDisabled = false
     }
 }
