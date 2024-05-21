@@ -76,6 +76,10 @@ class ForecastDetailNowView: UICollectionViewCell {
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        // Set compression resistance priority for infoLabel
+        infoLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        temperatureLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
         NSLayoutConstraint.activate([
             circularImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             circularImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -92,6 +96,7 @@ class ForecastDetailNowView: UICollectionViewCell {
             
             infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             infoLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            infoLabel.trailingAnchor.constraint(lessThanOrEqualTo: temperatureLabel.leadingAnchor, constant: -8),
             
             temperatureLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
@@ -145,3 +150,4 @@ struct ForecastDetailNowViewWrapper_Previews: PreviewProvider {
     }
 }
 #endif
+
