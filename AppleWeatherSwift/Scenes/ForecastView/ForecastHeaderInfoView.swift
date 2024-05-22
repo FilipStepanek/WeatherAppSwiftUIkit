@@ -106,14 +106,12 @@ struct ForecastHeaderInfoViewWrapper: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: ForecastHeaderInfoView, context: Context) {
-        // Update the view if needed
     }
 }
 
-
-struct ForecastHeaderInfoViewWrapper_Previews: PreviewProvider {
-    static var previews: some View {
-        ForecastHeaderInfoViewWrapper(dayIndex: 0)
-    }
+#Preview {
+    ForecastHeaderInfoViewWrapper(
+        dayIndex: 0
+    )
 }
 #endif

@@ -140,7 +140,6 @@ struct ForecastDetailViewWrapper: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: ForecastDetailView, context: Context) {
-        // Update the view if needed
     }
 }
 
@@ -149,7 +148,6 @@ struct ForecastDetailViewWrapper_Previews: PreviewProvider {
         let mockListResponse = ForecastResponse.ListResponse(date: 1702749600, main: ForecastResponse.MainResponseForecast(temp: 30), weather: [])
         
         ForecastDetailViewWrapper(weather: mockListResponse)
-             // Adjust the frame size as needed
             .previewLayout(.sizeThatFits)
     }
 }

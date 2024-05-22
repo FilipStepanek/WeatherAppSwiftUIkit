@@ -135,11 +135,13 @@ final class TodayViewModel: ObservableObject {
     }
     
     func startFetchingWeatherData() {
-        // Start a timer to fetch weather data periodically
-        timer = Timer.scheduledTimer(withTimeInterval: 300.0, repeats: true) { _ in // Fetch every 5 minutes
-            self.locationManager.requestLocation()
+            // Start a timer to fetch weather data periodically
+            timer = Timer.scheduledTimer(withTimeInterval: 1800.0, repeats: true) { _ in // Fetch every 30 minutes
+                Task { @MainActor in
+                    self.locationManager.requestLocation()
+                }
+            }
         }
-    }
     
     func stopFetchingWeatherData() {
         // Invalidate the timer to stop fetching data

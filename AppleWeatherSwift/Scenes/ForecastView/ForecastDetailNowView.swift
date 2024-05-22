@@ -144,10 +144,10 @@ struct ForecastDetailNowViewWrapper: UIViewRepresentable {
     }
 }
 
-struct ForecastDetailNowViewWrapper_Previews: PreviewProvider {
-    static var previews: some View {
-        ForecastDetailNowViewWrapper(weatherNow: .previewMock)
-    }
+#Preview {
+    ForecastDetailNowViewWrapper(
+        weatherNow: .previewMock
+    )
 }
 #endif
 

@@ -35,13 +35,11 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     var weather: ForecastResponse {
             didSet {
-                // Any additional setup when weather is set, if needed
             }
         }
         
         var weatherNow: CurrentResponse {
             didSet {
-                // Any additional setup when weatherNow is set, if needed
             }
         }
     
@@ -60,15 +58,13 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        //        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
-        // Register ForecastHeaderInfoView for section header
+        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(ForecastHeaderInfoView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         cv.register(ForecastDetailView.self, forCellWithReuseIdentifier: "cell")
         cv.register(ForecastDetailNowView.self, forCellWithReuseIdentifier: "nowCell")
         
-        cv.backgroundColor = .mainBackground // Set background color of collection view
+        cv.backgroundColor = .mainBackground
         cv.delegate = self
         cv.dataSource = self
         
@@ -80,7 +76,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     fileprivate lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        // Set other layout properties as needed
         return layout
     }()
     
@@ -112,8 +107,8 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         collectionViewFlowLayout.sectionHeadersPinToVisibleBounds = true
         
         // Add subviews and constraints...
-        view.addSubview(customNavigationBar) // Adding the custom navigation bar as a subview
-        view.addSubview(collectionView) // Adding the collection view as a subview
+        view.addSubview(customNavigationBar)
+        view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
             customNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
@@ -151,7 +146,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         // Assuming `weather` contains the list of forecast responses
-        for forecast in weather.list { // Accessing the `list` property of `weather`
+        for forecast in weather.list {
             let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(forecast.date)))
             
             if var existingData = groupedData[dateString] {
@@ -172,8 +167,8 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width - 24 // Adjust spacing as needed
-        return CGSize(width: width, height: 72) // Adjust height as needed
+        let width = collectionView.frame.width - 24
+        return CGSize(width: width, height: 72)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -232,7 +227,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 56) // Set header height
+        return CGSize(width: collectionView.frame.width, height: 56)
     }
 }
 
