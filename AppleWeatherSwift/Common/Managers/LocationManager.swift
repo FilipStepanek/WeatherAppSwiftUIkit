@@ -38,12 +38,13 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        handleStatus(status: manager.authorizationStatus)
+//        handleStatus(status: manager.authorizationStatus)
     }
     
     // MARK: - Request Location
     func requestLocation() {
         manager.requestLocation()
+        print("info requet")
     }
     // MARK: - Request Location Permission
     func requestLocationRemission() {

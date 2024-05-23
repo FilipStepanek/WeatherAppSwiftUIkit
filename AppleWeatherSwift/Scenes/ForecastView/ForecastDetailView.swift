@@ -7,9 +7,49 @@
 
 import UIKit
 
-class ForecastDetailView: UICollectionViewCell {
+// Define a protocol to unify the data models
+protocol WeatherData {
+    var icon: String { get }
+    var title: String { get }
+    var info: String { get }
+    var temperature: Double { get }
+}
 
-    let weather: ForecastResponse.ListResponse
+// Extend CurrentResponse to conform to WeatherData
+extension CurrentResponse: WeatherData {
+    var icon: String {
+        return weather.first?.icon ?? ""
+    }
+    var title: String {
+        return "Now"
+    }
+    var info: String {
+        return WeatherManagerExtension().getWeatherInfoFromForecastIcon(icon: icon)
+    }
+    var temperature: Double {
+        return main.temp
+    }
+}
+
+// Extend ForecastResponse.ListResponse to conform to WeatherData
+extension ForecastResponse.ListResponse: WeatherData {
+    var icon: String {
+        return weather.first?.icon ?? ""
+    }
+    var title: String {
+        return Date.formatUnixTimestampInGMT(date)
+    }
+    var info: String {
+        return WeatherManagerExtension().getWeatherInfoFromForecastIcon(icon: icon)
+    }
+    var temperature: Double {
+        return main.temp
+    }
+}
+
+class WeatherDetailView<T: WeatherData>: UICollectionViewCell {
+    
+    var weatherData: T?
     
     // UI Components
     private let iconImageView: UIImageView = {
@@ -21,27 +61,27 @@ class ForecastDetailView: UICollectionViewCell {
     private let circularImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 24 // Half of the maximum width or height
+        imageView.layer.cornerRadius = 24
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor.iconBase
         imageView.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
         return imageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.contentMediumBase
         label.textColor = .mainText
         return label
     }()
-
+    
     private let infoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.contentInfoSmallBase
         label.textColor = .contentRegular
         return label
     }()
-
+    
     private let temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.headlineThreeBase
@@ -49,20 +89,12 @@ class ForecastDetailView: UICollectionViewCell {
         return label
     }()
     
-    init(weather: ForecastResponse.ListResponse) {
-        self.weather = weather
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
-        configure(with: weather)
     }
     
-    override init(frame: CGRect) {
-          self.weather = ForecastResponse.ListResponse(date: 0, main: ForecastResponse.MainResponseForecast(temp: 0), weather: [])
-          super.init(frame: frame)
-          setupViews()
-      }
-    
-    required init?(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -89,7 +121,6 @@ class ForecastDetailView: UICollectionViewCell {
         temperatureLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         NSLayoutConstraint.activate([
-            
             circularImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             circularImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             circularImageView.widthAnchor.constraint(equalToConstant: 48),
@@ -112,13 +143,19 @@ class ForecastDetailView: UICollectionViewCell {
         ])
     }
     
-    func configure(with weather: ForecastResponse.ListResponse) {
-        iconImageView.image = UIImage(named: WeatherManagerExtension().getImageNameFromForecastIcon(icon: weather.weather.first?.icon ?? ""))
-        titleLabel.text = Date.formatUnixTimestampInGMT(weather.date)
-        infoLabel.text = WeatherManagerExtension().getWeatherInfoFromForecastIcon(icon: weather.weather.first?.icon ?? "")
-        temperatureLabel.text = formatTemperature(weather.main.temp)
+    func configure(with weatherData: T) {
+        self.weatherData = weatherData
+        updateUI()
     }
-
+    
+    private func updateUI() {
+        guard let weatherData = weatherData else { return }
+        iconImageView.image = UIImage(named: WeatherManagerExtension().getImageNameFromForecastIcon(icon: weatherData.icon))
+        titleLabel.text = weatherData.title
+        infoLabel.text = weatherData.info
+        temperatureLabel.text = formatTemperature(weatherData.temperature)
+    }
+    
     private func formatTemperature(_ temperature: Double) -> String {
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.numberFormatter.maximumFractionDigits = 0
@@ -130,25 +167,34 @@ class ForecastDetailView: UICollectionViewCell {
 
 #if DEBUG
 import SwiftUI
-struct ForecastDetailViewWrapper: UIViewRepresentable {
-    typealias UIViewType = ForecastDetailView
+
+struct WeatherDetailViewWrapper<T: WeatherData>: UIViewRepresentable {
+    typealias UIViewType = WeatherDetailView<T>
     
-    let weather: ForecastResponse.ListResponse
+    let weatherData: T
     
-    func makeUIView(context: Context) -> ForecastDetailView {
-        return ForecastDetailView(weather: weather)
+    func makeUIView(context: Context) -> WeatherDetailView<T> {
+        let weatherDetailView = WeatherDetailView<T>()
+        weatherDetailView.configure(with: weatherData)
+        return weatherDetailView
     }
     
-    func updateUIView(_ uiView: ForecastDetailView, context: Context) {
+    func updateUIView(_ uiView: WeatherDetailView<T>, context: Context) {
+        uiView.configure(with: weatherData)
     }
 }
 
-struct ForecastDetailViewWrapper_Previews: PreviewProvider {
+struct WeatherDetailViewWrapper_Previews: PreviewProvider {
     static var previews: some View {
-        let mockListResponse = ForecastResponse.ListResponse(date: 1702749600, main: ForecastResponse.MainResponseForecast(temp: 30), weather: [])
+        let mockCurrentResponse = CurrentResponse.previewMock
+        let mockForecastResponse = ForecastResponse.ListResponse(date: 1702749600, main: ForecastResponse.MainResponseForecast(temp: 30), weather: [])
         
-        ForecastDetailViewWrapper(weather: mockListResponse)
-            .previewLayout(.sizeThatFits)
+        VStack {
+            WeatherDetailViewWrapper(weatherData: mockCurrentResponse)
+                .previewLayout(.sizeThatFits)
+            WeatherDetailViewWrapper(weatherData: mockForecastResponse)
+                .previewLayout(.sizeThatFits)
+        }
     }
 }
 #endif
