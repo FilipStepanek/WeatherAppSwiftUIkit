@@ -5,39 +5,6 @@
 //  Created by Filip Štěpánek on 01.11.2023.
 //
 
-//import SwiftUI
-//import Factory
-//
-//
-//@main
-//@MainActor
-//struct AppleWeatherSwiftApp: App {
-//    
-//    // Use @Environment to track the scene phase
-//        @Environment(\.scenePhase) private var scenePhase
-//    
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//    }
-//}
-//
-//extension Container {
-//    var weatherManager: Factory<WeatherManaging> {
-//        Factory(self) {
-//            WeatherManager()
-//        }
-//    }
-//    
-//    var locationManager: Factory<LocationManaging> {
-//        Factory(self) {
-//            LocationManager()
-//        }
-//    }
-//}
-
-
 import SwiftUI
 import Factory
 import OSLog

@@ -44,7 +44,7 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
     // MARK: - Request Location
     func requestLocation() {
         manager.requestLocation()
-        print("info requet")
+        print("Requested location") // Debugging
     }
     // MARK: - Request Location Permission
     func requestLocationRemission() {
@@ -52,6 +52,7 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Updated locations: \(locations)") // Debugging
         location.send(locations.first?.coordinate)
     }
     

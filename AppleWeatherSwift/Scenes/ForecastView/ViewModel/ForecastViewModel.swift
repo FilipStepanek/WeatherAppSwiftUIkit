@@ -102,3 +102,4 @@ extension ForecastViewModel {
         case errorNetwork(String)
     }
 }
+
