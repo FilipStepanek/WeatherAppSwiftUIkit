@@ -27,17 +27,10 @@ struct AppleWeatherSwiftApp: App {
                 .onChange(of: scenePhase) { newScenePhase in
                     switch newScenePhase {
                     case .active:
-                        // Start fetching weather data when the app becomes active
-                        Logger.viewCycle.info("App is active - resume data fetching")
-                        todayViewModel.startFetchingWeatherData()
-                        forecastViewModel.startFetchingWeatherData()
+                        Logger.viewCycle.info("App is active")
                        
                     case .inactive, .background:
-                        // Stop fetching weather data when the app becomes inactive or moves to the background
-                        Logger.viewCycle.info("App is in background - stop data fetching")
-                        todayViewModel.stopFetchingWeatherData()
-                        forecastViewModel.stopFetchingWeatherData()
-                        
+                        Logger.viewCycle.info("App is in background")
                     @unknown default:
                         break
                     }

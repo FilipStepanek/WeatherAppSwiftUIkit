@@ -1,5 +1,5 @@
 //
-//  MyLocationView.swift
+//  TodayView.swift
 //  AppleWeatherSwift
 //
 //  Created by Filip Štěpánek on 01.11.2023.

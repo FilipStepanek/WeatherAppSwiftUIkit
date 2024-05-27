@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import OSLog
 
 struct ForecastViewControllerWrapper: UIViewControllerRepresentable {
     typealias UIViewControllerType = ForecastViewController
@@ -117,7 +118,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     @objc private func handleRefresh() {
         // Refresh logic here
-        print("Refreshing data...")
+        Logger.dataFlow.debug("Refreshing data...")
         
         // Simulate network call or data update
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -163,7 +164,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let numberOfSections = groupedData.keys.count
-        print("Number of sections: \(numberOfSections)")
+        Logger.dataFlow.debug("Number of sections: \(numberOfSections)")
         return numberOfSections
     }
     
@@ -179,14 +180,14 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let dateString = dates[section]
         
         // Print the sorted dates
-        print("Sorted dates: \(dates)")
+        Logger.dataFlow.debug("Sorted dates: \(dates)")
         
         // Print the date string for the current section
-        print("Date string for section \(section): \(dateString)")
+        Logger.dataFlow.debug("Date string for section \(section): \(dateString)")
         
         // Print the count of items for the current date string
         let itemCount = groupedData[dateString]?.count ?? 0
-        print("Number of items in section \(section): \(itemCount)")
+        Logger.dataFlow.debug("Number of items in section \(section): \(itemCount)")
         
         return section == 0 ? itemCount + 1 : itemCount
     }
