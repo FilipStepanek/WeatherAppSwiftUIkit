@@ -9,24 +9,30 @@ import SwiftUI
 
 struct ForecastView: View {
 
-    @ObservedObject var viewModelForecast: ForecastViewModel
+    @ObservedObject var forecastViewModel: ForecastViewModel
 
     var body: some View {
         ZStack {
-            switch viewModelForecast.state {
+            switch forecastViewModel.state {
             case .loading:
                 LoadingView()
             case .missingLocation:
                 EnableLocationView()
-            case .success(let forecastResponse, let currentResponse ):
-                ForecastViewControllerWrapper(weather: forecastResponse, weatherNow: currentResponse)
+            case .success(
+                let forecastResponse,
+                let currentResponse
+            ):
+                ForecastViewControllerWrapper(
+                    weather: forecastResponse,
+                    weatherNow: currentResponse, forecastViewModel: forecastViewModel
+                )
             case .error:
                 ErrorFetchingDataView {
-                    viewModelForecast.onRefresh()
+                    forecastViewModel.onRefresh()
                 }
             case .errorNetwork:
                 ErrorInternetConnectionView {
-                    viewModelForecast.onRefresh()
+                    forecastViewModel.onRefresh()
                 }
             }
         }

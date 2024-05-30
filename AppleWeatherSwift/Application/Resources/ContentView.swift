@@ -30,7 +30,7 @@ struct ContentView: View {
                 .tag(0)
                 .toolbarBackground(.mainBackground, for: .tabBar)
             
-            ForecastView(viewModelForecast: forecastViewModel)
+            ForecastView(forecastViewModel: forecastViewModel)
                 .tabItem {
                     Image(.tabBarForecast)
                     Text("forecast.TabBar.Title")

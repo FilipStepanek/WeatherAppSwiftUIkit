@@ -14,9 +14,10 @@ struct ForecastViewControllerWrapper: UIViewControllerRepresentable {
     
     let weather: ForecastResponse
     let weatherNow: CurrentResponse
+    let forecastViewModel: ForecastViewModel
     
     func makeUIViewController(context: Context) -> ForecastViewController {
-        return ForecastViewController(weather: weather, weatherNow: weatherNow)
+        return ForecastViewController(weather: weather, weatherNow: weatherNow, forecastViewModel: forecastViewModel)
     }
     
     func updateUIViewController(_ uiViewController: ForecastViewController, context: Context) {
@@ -28,6 +29,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     var weather: ForecastResponse
     var weatherNow: CurrentResponse
+    let forecastViewModel: ForecastViewModel
     
     // chnage only private
     private lazy var customNavigationBar: UILabel = {
@@ -76,9 +78,10 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         return refreshControl
     }()
     
-    init(weather: ForecastResponse, weatherNow: CurrentResponse) {
+    init(weather: ForecastResponse, weatherNow: CurrentResponse, forecastViewModel: ForecastViewModel) {
         self.weather = weather
         self.weatherNow = weatherNow
+        self.forecastViewModel = forecastViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -122,7 +125,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         
         // Simulate network call or data update
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            // Stop the refresh control
+            self.forecastViewModel.onRefresh()
             self.refreshControl.endRefreshing()
             
             // Update data and reload collection view
@@ -180,14 +183,14 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let dateString = dates[section]
         
         // Print the sorted dates
-//        Logger.dataFlow.debug("Sorted dates: \(dates)")
+        Logger.dataFlow.debug("Sorted dates: \(dates)")
         
         // Print the date string for the current section
-//        Logger.dataFlow.debug("Date string for section \(section): \(dateString)")
+        Logger.dataFlow.debug("Date string for section \(section): \(dateString)")
         
         // Print the count of items for the current date string
         let itemCount = groupedData[dateString]?.count ?? 0
-//        Logger.dataFlow.debug("Number of items in section \(section): \(itemCount)")
+        Logger.dataFlow.debug("Number of items in section \(section): \(itemCount)")
         
         return section == 0 ? itemCount + 1 : itemCount
     }
@@ -236,10 +239,14 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
 }
 
 #if DEBUG
-#Preview {
-    ForecastViewControllerWrapper(
-        weather: .previewMock,
-        weatherNow: .previewMock
-    )
+struct ForecastViewControllerWrapper_Previews: PreviewProvider {
+    static var previews: some View {
+        let forecastViewModel = ForecastViewModel()
+        return ForecastViewControllerWrapper(
+            weather: .previewMock,
+            weatherNow: .previewMock,
+            forecastViewModel: forecastViewModel
+        )
+    }
 }
 #endif

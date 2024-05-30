@@ -18,13 +18,12 @@ final class TodayViewModel: ObservableObject {
     @Published var isPresented: Bool = false
     @Published private(set) var state: State = .loading
     
-    //MARK: - Injected weatherManager via Factory package manager - Dependency Injection
+    // MARK: - Injected weatherManager via Factory package manager - Dependency Injection
     @Injected(\.weatherManager) private var weatherManager
     @Injected(\.locationManager) private var locationManager
     
     var weatherManagerExtension = WeatherManagerExtension()
     private var cancellables = Set<AnyCancellable>()
-    private var timer: Timer?
     
     init() {
         Logger.networking.debug("TodayViewModel initialized")
@@ -34,7 +33,7 @@ final class TodayViewModel: ObservableObject {
     func setupBinding() {
         locationManager
             .location
-            .compactMap{$0}
+            .compactMap { $0 }
             .sink { [weak self] location in
                 self?.getWeather(for: location)
             }
@@ -44,7 +43,7 @@ final class TodayViewModel: ObservableObject {
             .authorizationStatus
             .sink { [weak self] status in
                 switch status {
-                case.locationGranted:
+                case .locationGranted:
                     self?.locationManager.requestLocation()
                 default:
                     self?.state = .missingLocation
@@ -53,8 +52,10 @@ final class TodayViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func getWeather(for location: CLLocationCoordinate2D) {
-        state = .loading
+    func getWeather(for location: CLLocationCoordinate2D, setLoadingState: Bool = true) {
+        if setLoadingState {
+            state = .loading
+        }
         
         Task {
             do {
@@ -76,10 +77,23 @@ final class TodayViewModel: ObservableObject {
             }
         }
     }
-
+    
     func onRefresh() {
-        Logger.networking.debug("onRefresh called")
-        locationManager.requestLocation()
+        Logger.networking.info("onRefresh called for Today")
+        
+        // Add a delay before requesting location and fetching weather data
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
+            
+            // Request new location
+            locationManager.requestLocation()
+            
+            // Immediately fetch weather with the last known location if available, without setting loading state
+            if let lastLocation = locationManager.lastLocation?.coordinate {
+                Logger.networking.info("onResfersh - location is same for Today")
+                getWeather(for: lastLocation, setLoadingState: false)
+            }
+        }
     }
 }
 

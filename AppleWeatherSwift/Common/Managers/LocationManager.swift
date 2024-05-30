@@ -7,8 +7,8 @@
 
 import Foundation
 import CoreLocation
-import OSLog
 import Combine
+import OSLog
 
 enum Status {
     case locationGranted
@@ -20,18 +20,16 @@ enum Status {
 protocol LocationManaging {
     var location: PassthroughSubject<CLLocationCoordinate2D?, Never> { get }
     var authorizationStatus: PassthroughSubject<Status, Never> { get }
+    var lastLocation: CLLocation? { get }
     
     func requestLocation()
     func requestLocationPermission()
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
 }
 
 class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
-    let manager = CLLocationManager()
-    var lastLocation: CLLocation?
-    
+    private let manager = CLLocationManager()
+    private(set) var lastLocation: CLLocation?
+
     var location: PassthroughSubject<CLLocationCoordinate2D?, Never> = .init()
     var authorizationStatus: PassthroughSubject<Status, Never> = .init()
     
@@ -55,7 +53,6 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
     }
     
     // MARK: - Location Manager Delegate Methods
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         Logger.networking.debug("Updated locations: \(locations)")
         if let newLocation = locations.last {
@@ -70,18 +67,14 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
     func handleStatus(status: CLAuthorizationStatus) {
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
-            // Handle authorized status
             Logger.networking.info("Location authorization granted")
             authorizationStatus.send(.locationGranted)
         case .denied, .restricted:
-            // Handle denied or restricted status
             Logger.networking.info("Location authorization denied or restricted")
             authorizationStatus.send(.denied)
         case .notDetermined:
-            // Handle not determined status
             Logger.networking.info("Location authorization not determined")
             authorizationStatus.send(.unknown)
-            
         @unknown default:
             authorizationStatus.send(.unknown)
         }
@@ -101,8 +94,7 @@ class LocationManager: NSObject, LocationManaging, CLLocationManagerDelegate {
     }
     
     // MARK: - Smart Location Management
-    
-    func startMonitoringLocation() {
+    private func startMonitoringLocation() {
         if CLLocationManager.significantLocationChangeMonitoringAvailable() {
             manager.startMonitoringSignificantLocationChanges()
         } else {
