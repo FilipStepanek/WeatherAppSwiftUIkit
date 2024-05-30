@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ForecastView: View {
-    
-    @StateObject private var viewModelForecast = ForecastViewModel()
-    @StateObject private var viewModelToday = TodayViewModel()
-    
+
+    @ObservedObject var viewModelForecast: ForecastViewModel
+
     var body: some View {
         ZStack {
             switch viewModelForecast.state {
@@ -22,7 +21,9 @@ struct ForecastView: View {
             case .success(let forecastResponse, let currentResponse ):
                 ForecastViewControllerWrapper(weather: forecastResponse, weatherNow: currentResponse)
             case .error:
-                ErrorFetchingDataView()
+                ErrorFetchingDataView {
+                    viewModelForecast.onRefresh()
+                }
             case .errorNetwork:
                 ErrorInternetConnectionView {
                     viewModelForecast.onRefresh()
@@ -31,9 +32,3 @@ struct ForecastView: View {
         }
     }
 }
-
-#if DEBUG
-#Preview {
-    ForecastView()
-}
-#endif

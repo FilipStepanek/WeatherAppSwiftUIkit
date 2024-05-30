@@ -20,7 +20,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            TodayView(viewModelToday: .init())
+            TodayView(viewModelToday: todayViewModel)
                 .tabItem {
                     Image(.tabBarToday)
                     Text("today.Tabbar.Title")
@@ -30,7 +30,7 @@ struct ContentView: View {
                 .tag(0)
                 .toolbarBackground(.mainBackground, for: .tabBar)
             
-            ForecastView()
+            ForecastView(viewModelForecast: forecastViewModel)
                 .tabItem {
                     Image(.tabBarForecast)
                     Text("forecast.TabBar.Title")

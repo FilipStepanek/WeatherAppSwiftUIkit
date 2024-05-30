@@ -180,14 +180,14 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let dateString = dates[section]
         
         // Print the sorted dates
-        Logger.dataFlow.debug("Sorted dates: \(dates)")
+//        Logger.dataFlow.debug("Sorted dates: \(dates)")
         
         // Print the date string for the current section
-        Logger.dataFlow.debug("Date string for section \(section): \(dateString)")
+//        Logger.dataFlow.debug("Date string for section \(section): \(dateString)")
         
         // Print the count of items for the current date string
         let itemCount = groupedData[dateString]?.count ?? 0
-        Logger.dataFlow.debug("Number of items in section \(section): \(itemCount)")
+//        Logger.dataFlow.debug("Number of items in section \(section): \(itemCount)")
         
         return section == 0 ? itemCount + 1 : itemCount
     }

@@ -1,5 +1,5 @@
 //
-//  TodayView.swift
+//  MyLocationView.swift
 //  AppleWeatherSwift
 //
 //  Created by Filip Štěpánek on 01.11.2023.
@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TodayView: View {
     // TODO: Make it private again, add init
-    @StateObject var viewModelToday: TodayViewModel
+    @ObservedObject var viewModelToday: TodayViewModel
     
     var body: some View {
         ZStack {
@@ -18,10 +18,12 @@ struct TodayView: View {
                 LoadingView()
             case .missingLocation:
                 EnableLocationView()
-            case .succes(let currentResponse):
-                TodayViewContent(weather: currentResponse)
+            case .success(let currentResponse):
+                TodayViewContent(viewModel: viewModelToday, weather: currentResponse)
             case .error:
-                ErrorFetchingDataView()
+                ErrorFetchingDataView {
+                    viewModelToday.onRefresh()
+                }
             case .errorNetwork:
                 ErrorInternetConnectionView {
                     viewModelToday.onRefresh()
