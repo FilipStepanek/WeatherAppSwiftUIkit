@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ForecastView: View {
 
-    @ObservedObject var forecastViewModel: ForecastViewModel
+    @StateObject private var forecastViewModel = ForecastViewModel()
 
     var body: some View {
         ZStack {
@@ -24,7 +24,8 @@ struct ForecastView: View {
             ):
                 ForecastViewControllerWrapper(
                     weather: forecastResponse,
-                    weatherNow: currentResponse, forecastViewModel: forecastViewModel
+                    weatherNow: currentResponse, 
+                    forecastViewModel: forecastViewModel
                 )
             case .error:
                 ErrorFetchingDataView {

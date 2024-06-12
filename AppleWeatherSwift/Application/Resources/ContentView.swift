@@ -10,17 +10,9 @@ import CoreLocationUI
 
 struct ContentView: View {
     
-    @ObservedObject var todayViewModel: TodayViewModel
-    @ObservedObject var forecastViewModel: ForecastViewModel
-    
-    init(todayViewModel: TodayViewModel, forecastViewModel: ForecastViewModel) {
-        self.todayViewModel = todayViewModel
-        self.forecastViewModel = forecastViewModel
-    }
-    
     var body: some View {
         TabView {
-            TodayView(viewModelToday: todayViewModel)
+            TodayView()
                 .tabItem {
                     Image(.tabBarToday)
                     Text("today.Tabbar.Title")
@@ -30,7 +22,7 @@ struct ContentView: View {
                 .tag(0)
                 .toolbarBackground(.mainBackground, for: .tabBar)
             
-            ForecastView(forecastViewModel: forecastViewModel)
+            ForecastView()
                 .tabItem {
                     Image(.tabBarForecast)
                     Text("forecast.TabBar.Title")
@@ -42,12 +34,10 @@ struct ContentView: View {
         }
         .accentColor(.tabBar)
     }
-    
-    
 }
 
 #if DEBUG
 #Preview {
-    ContentView(todayViewModel: TodayViewModel(), forecastViewModel: ForecastViewModel())
+    ContentView()
 }
 #endif

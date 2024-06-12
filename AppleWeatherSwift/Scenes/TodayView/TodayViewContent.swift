@@ -9,12 +9,8 @@ import SwiftUI
 import OSLog
 
 struct TodayViewContent: View {
-    init(viewModel: TodayViewModel, weather: CurrentResponse) {
-        self._viewModel = .init(wrappedValue: viewModel)
-        self.weather = weather
-    }
     
-    @StateObject private var viewModel: TodayViewModel
+    @EnvironmentObject private var viewModel: TodayViewModel
     let weather: CurrentResponse
     
     var body: some View {

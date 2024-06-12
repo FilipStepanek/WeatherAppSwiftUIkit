@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		850FC5AA2BA9D42900E66FB4 /* OnLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850FC5A92BA9D42900E66FB4 /* OnLoadModifier.swift */; };
 		852DB8972B70BD2100596FFB /* ErrorAnimationBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852DB8962B70BD2100596FFB /* ErrorAnimationBackgroundView.swift */; };
 		853EFC7F2C04BCE100E544F2 /* ConditionalScrollTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853EFC7E2C04BCE100E544F2 /* ConditionalScrollTransition.swift */; };
 		857371BF2BE91B21002B20FB /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 857371BE2BE91B21002B20FB /* Factory */; };
@@ -84,7 +83,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		850FC5A92BA9D42900E66FB4 /* OnLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadModifier.swift; sourceTree = "<group>"; };
 		852DB8962B70BD2100596FFB /* ErrorAnimationBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAnimationBackgroundView.swift; sourceTree = "<group>"; };
 		853EFC7E2C04BCE100E544F2 /* ConditionalScrollTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalScrollTransition.swift; sourceTree = "<group>"; };
 		85412DE82B826D21000EB544 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -154,14 +152,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		850FC5A82BA9D41B00E66FB4 /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-				850FC5A92BA9D42900E66FB4 /* OnLoadModifier.swift */,
-			);
-			path = Modifiers;
-			sourceTree = "<group>";
-		};
 		85412DE52B826D21000EB544 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				85B73FF82BBD265F001AF499 /* RouterNetwork */,
-				850FC5A82BA9D41B00E66FB4 /* Modifiers */,
 				85D47C322BA8285500F9B53C /* Constants  */,
 				85C2B5EB2B26F1A100305CDF /* Model Data */,
 				85C8A7A32B19BCBD00BCBC3A /* Managers */,
@@ -575,7 +564,6 @@
 				858AF8B02B59206000F91C3F /* ShareButtonExtension.swift in Sources */,
 				85C8A79A2B15CE2100BCBC3A /* ForecastHeaderInfoView.swift in Sources */,
 				85C8A7882B12478500BCBC3A /* TodayDetailInfo.swift in Sources */,
-				850FC5AA2BA9D42900E66FB4 /* OnLoadModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

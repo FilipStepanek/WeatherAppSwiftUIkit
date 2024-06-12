@@ -14,15 +14,12 @@ import OSLog
 struct AppleWeatherSwiftApp: App {
     // Use @Environment to track the scene phase
     @Environment(\.scenePhase) private var scenePhase
-    
-    // Injected ViewModels
-    @StateObject private var todayViewModel = TodayViewModel()
-    @StateObject private var forecastViewModel = ForecastViewModel()
+
 
     var body: some Scene {
         WindowGroup {
             // Inject the ViewModels into ContentView
-            ContentView(todayViewModel: todayViewModel, forecastViewModel: forecastViewModel)
+            ContentView()
                 // Add scene phase handling
                 .onChange(of: scenePhase) { newScenePhase in
                     switch newScenePhase {
