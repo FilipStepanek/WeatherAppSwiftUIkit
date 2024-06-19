@@ -150,7 +150,7 @@ class WeatherDetailView<T: WeatherData>: UICollectionViewCell {
     
     private func updateUI() {
         guard let weatherData = weatherData else { return }
-        iconImageView.image = UIImage(named: WeatherManagerExtension().getImageNameFromForecastIcon(icon: weatherData.icon))
+        iconImageView.image = WeatherManagerExtension().getImageNameFromForecastIcon(icon: weatherData.icon)
         titleLabel.text = weatherData.title
         infoLabel.text = weatherData.info
         temperatureLabel.text = formatTemperature(weatherData.temperature)
