@@ -11,90 +11,90 @@ import SwiftUI
 class WeatherManagerExtension {
     
     // MARK: - Getting image name from current weather icon
-    func getImageNameFromWeatherIcon(icon: String) -> String {
+    func getImageNameFromWeatherIcon(icon: String) -> Image {
         switch icon {
         case "01d":
-            return "todaySun"
+            return Image(.todaySun)
         case "01n":
-            return "todayMoon"
+            return Image(.todayMoon)
         case "02d":
-            return "todayFewCloudsSun"
+            return Image(.todayFewCloudsSun)
         case "02n":
-            return "todayFewCloudsMoon"
+            return Image(.todayFewCloudsSun)
         case "03d":
-            return "todayCloudy"
+            return Image(.todayCloudy)
         case "03n":
-            return "todayCloudy"
+            return Image(.todayCloudy)
         case "04d":
-            return "todayCloudy"
+            return Image(.todayCloudy)
         case "04n":
-            return "todayCloudy"
+            return Image(.todayCloudy)
         case "09d":
-            return "todayShowers"
+            return Image(.todayShowers)
         case "09n":
-            return "todayShowers"
+            return Image(.todayShowers)
         case "10d":
-            return "todayRain"
+            return Image(.todayRain)
         case "10n":
-            return "todayRain"
+            return Image(.todayRain)
         case "11d":
-            return "todayThunderstorm"
+            return Image(.todayThunderstorm)
         case "11n":
-            return "todayThunderstorm"
+            return Image(.todayThunderstorm)
         case "13d":
-            return "todaySnow"
+            return Image(.todaySnow)
         case "13n":
-            return "todaySnow"
+            return Image(.todaySnow)
         case "50d":
-            return "todayMist"
+            return Image(.todayMist)
         case "50n":
-            return "todayMist"
+            return Image(.todayMist)
         default:
-            return "defaultImage"
+            return Image(systemName: "photo.circle.fill")
         }
     }
     
     // MARK: - Getting image name from forecast icon
-    func getImageNameFromForecastIcon(icon: String) -> String {
+    func getImageNameFromForecastIcon(icon: String) -> UIImage? {
         switch icon {
         case "01d":
-            return "forecastSun"
+            return UIImage(resource: .forecastSun)
         case "01n":
-            return "forecastMoon"
+            return UIImage(resource: .forecastMoon)
         case "02d":
-            return "forecastFewCloudsSun"
+            return UIImage(resource: .forecastFewCloudsSun)
         case "02n":
-            return "forecastFewCloudsMoon"
+            return UIImage(resource: .forecastFewCloudsMoon)
         case "03d":
-            return "forecastCloudy"
+            return UIImage(resource: .forecastCloudy)
         case "03n":
-            return "forecastCloudy"
+            return UIImage(resource: .forecastCloudy)
         case "04d":
-            return "forecastCloudy"
+            return UIImage(resource: .forecastCloudy)
         case "04n":
-            return "forecastCloudy"
+            return UIImage(resource: .forecastCloudy)
         case "09d":
-            return "forecastShowersLight"
+            return UIImage(resource: .forecastShowersLight)
         case "09n":
-            return "forecastShowersLight"
+            return UIImage(resource: .forecastShowersLight)
         case "10d":
-            return "forecastRain"
+            return UIImage(resource: .forecastRain)
         case "10n":
-            return "forecastRain"
+            return UIImage(resource: .forecastRain)
         case "11d":
-            return "forecastThunderstorm"
+            return UIImage(resource: .forecastThunderstorm)
         case "11n":
-            return "forecastThunderstorm"
+            return UIImage(resource: .forecastThunderstorm)
         case "13d":
-            return "forecastSnow"
+            return UIImage(resource: .forecastSnow)
         case "13n":
-            return "forecastSnow"
+            return UIImage(resource: .forecastSnow)
         case "50d":
-            return "forecastMist"
+            return UIImage(resource: .forecastMist)
         case "50n":
-            return "forecastMist"
+            return UIImage(resource: .forecastMist)
         default:
-            return "defaultImage"
+            return UIImage(systemName: "photo.circle.fill")
         }
     }
     
