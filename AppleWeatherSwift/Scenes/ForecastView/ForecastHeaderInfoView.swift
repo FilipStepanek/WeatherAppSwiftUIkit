@@ -5,26 +5,64 @@
 //  Created by Filip Štěpánek on 28.11.2023.
 //
 
-import SwiftUI
+import UIKit
 
-struct ForecastHeaderInfoView: View {
+class ForecastHeaderInfoView: UICollectionReusableView {
+    // UI Components
+    let dayLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.dayInfoBase
+        label.textColor = .mainText
+        return label
+    }()
+
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.contentInfoSmallBase
+        label.textColor = .contentRegular
+        return label
+    }()
     
-    let dayIndex: Int
-    
-    var body: some View {
-        HStack() {
-            Text(dayHeaderText())
-                .foregroundStyle(.mainText)
-                .font(.dayInfo)
-            
-            Spacer()
-            
-            Text(currentDate(for: dayIndex))
-                .modifier(ContentSmallInfoModifier())
+    var dayIndex: Int {
+        didSet {
+            dayLabel.text = dayHeaderText()
+            dateLabel.text = currentDate(for: dayIndex)
         }
-        
-        .padding([.top,.bottom], 16)
-        .background(.mainBackground)
+    }
+    
+    override init(frame: CGRect) {
+        self.dayIndex = 0
+        super.init(frame: frame)
+        setupUI()
+        setupConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+        addSubview(dayLabel)
+        addSubview(dateLabel)
+        backgroundColor = .mainBackground
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            dayLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            dateLabel.centerYAnchor.constraint(equalTo: dayLabel.centerYAnchor)
+        ])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        dayLabel.text = dayHeaderText()
+        dateLabel.text = currentDate(for: dayIndex)
     }
     
     func currentDate(for dayIndex: Int) -> String {
@@ -37,9 +75,9 @@ struct ForecastHeaderInfoView: View {
     func dayHeaderText() -> String {
         switch dayIndex {
         case 0:
-            return String(localized: "today.day.info")
+            return NSLocalizedString("today.day.info", comment: "")
         case 1:
-            return String(localized: "tomorrow.day.info")
+            return NSLocalizedString("tomorrow.day.info", comment: "")
         default:
             let date = Calendar.current.date(byAdding: .day, value: dayIndex, to: Date()) ?? Date()
             let dayFormatter = DateFormatter()
@@ -50,8 +88,28 @@ struct ForecastHeaderInfoView: View {
 }
 
 #if DEBUG
+import SwiftUI
+
+struct ForecastHeaderInfoViewWrapper: UIViewRepresentable {
+    typealias UIViewType = ForecastHeaderInfoView
+    
+    let dayIndex: Int
+    
+    init(dayIndex: Int) {
+        self.dayIndex = dayIndex
+    }
+    
+    func makeUIView(context: Context) -> ForecastHeaderInfoView {
+        return ForecastHeaderInfoView()
+    }
+    
+    func updateUIView(_ uiView: ForecastHeaderInfoView, context: Context) {
+    }
+}
+
 #Preview {
-    ForecastHeaderInfoView(dayIndex: 0)
+    ForecastHeaderInfoViewWrapper(
+        dayIndex: 0
+    )
 }
 #endif
-

@@ -7,14 +7,26 @@
 
 import SwiftUI
 import Factory
-
+import OSLog
 
 @main
 @MainActor
 struct AppleWeatherSwiftApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onChange(of: scenePhase) { newScenePhase in
+                    switch newScenePhase {
+                    case .active:
+                        Logger.viewCycle.info("App is active")
+                    case .inactive, .background:
+                        Logger.viewCycle.info("App is in background")
+                    @unknown default:
+                        break
+                    }
+                }
         }
     }
 }

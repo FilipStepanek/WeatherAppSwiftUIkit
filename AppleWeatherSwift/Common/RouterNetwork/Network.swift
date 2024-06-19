@@ -32,7 +32,7 @@ class Network {
     }
     
     func request<T: Decodable>(router: Router) async throws -> T {
-        print("---\(try? router.asRequest())")
+        Logger.networking.debug("---\(String(describing: try? router.asRequest()))")
         
         let (data, response) = try await session.data(for: router.asRequest())
         
@@ -40,7 +40,6 @@ class Network {
               let statusCode = HTTPStatusCode(rawValue: httpResponse.statusCode),
               router.acceptableStatusCodes?.contains(statusCode) ?? (HTTPStatusCode.ok == statusCode) else {
             
-            // TODO: lognout status code jako error
             throw NetworkError.invalidResponse
         }
         return try decoder.decode(T.self, from: data)

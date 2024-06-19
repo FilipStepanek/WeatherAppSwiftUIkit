@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Model of the response body we get from calling the OpenWeather API
-struct CurrentResponse: Codable {
+struct CurrentResponse: Codable, Equatable {
     var coord: CoordinatesResponse
     var weather: [WeatherResponse]
     var main: MainResponse
@@ -17,26 +17,35 @@ struct CurrentResponse: Codable {
     var sys: CountryName
     var rain: Precipitation?
     
+    static func == (lhs: CurrentResponse, rhs: CurrentResponse) -> Bool {
+        return lhs.coord == rhs.coord &&
+               lhs.weather == rhs.weather &&
+               lhs.main == rhs.main &&
+               lhs.name == rhs.name &&
+               lhs.wind == rhs.wind &&
+               lhs.sys == rhs.sys &&
+               lhs.rain == rhs.rain
+    }
     
-    struct CoordinatesResponse: Codable {
+    struct CoordinatesResponse: Codable, Equatable {
         var lon: Double
         var lat: Double
     }
     
-    struct WeatherResponse: Codable {
+    struct WeatherResponse: Codable, Equatable {
         var id: Double
         var main: String
         var description: String
         var icon: String
     }
     
-    struct MainResponse: Codable {
+    struct MainResponse: Codable, Equatable {
         var temp: Double
         var pressure: Double
         var humidity: Double
     }
     
-    struct WindResponse: Codable {
+    struct WindResponse: Codable, Equatable {
         var speed: Double
         let deg: Double
         var windDirection: String {
@@ -65,11 +74,11 @@ struct CurrentResponse: Codable {
         }
     }
     
-    struct CountryName: Codable {
+    struct CountryName: Codable, Equatable {
         var country: String
     }
     
-    struct Precipitation: Codable {
+    struct Precipitation: Codable, Equatable {
         var oneHour: Double?
         
         enum CodingKeys: String, CodingKey {
@@ -78,11 +87,15 @@ struct CurrentResponse: Codable {
     }
 }
 
-struct ForecastResponse: Codable {
+struct ForecastResponse: Codable, Equatable {
     let city: CoordinatesResp
     let list: [ListResponse]
     
-    struct ListResponse: Codable {
+    static func == (lhs: ForecastResponse, rhs: ForecastResponse) -> Bool {
+        return lhs.city == rhs.city && lhs.list == rhs.list
+    }
+    
+    struct ListResponse: Codable, Equatable {
         var date: Double
         var main: MainResponseForecast
         var weather: [WeatherResponseForecast]
@@ -94,20 +107,20 @@ struct ForecastResponse: Codable {
         }
     }
     
-    struct CoordinatesResp: Codable {
+    struct CoordinatesResp: Codable, Equatable {
         var coord: Coordinates
     }
     
-    struct Coordinates: Codable {
+    struct Coordinates: Codable, Equatable {
         var lon: Double
         var lat: Double
     }
     
-    struct MainResponseForecast: Codable {
+    struct MainResponseForecast: Codable, Equatable {
         var temp: Double
     }
     
-    struct WeatherResponseForecast: Codable {
+    struct WeatherResponseForecast: Codable, Equatable {
         var icon: String
     }
 }

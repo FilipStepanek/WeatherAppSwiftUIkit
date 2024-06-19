@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreLocationUI
 import Factory
 
 struct EnableLocationView: View {
@@ -31,7 +30,7 @@ struct EnableLocationView: View {
                 .modifier(ErrorInfoModifier())
             
             Button(action: {
-                locationManager.requestLocationRemission()
+                locationManager.requestLocationPermission()
                 print("Button pressed Enable location")
             }) {
                 Text("enable.Location.Button.Title")

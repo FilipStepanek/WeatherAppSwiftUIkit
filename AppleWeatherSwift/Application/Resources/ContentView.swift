@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import CoreLocationUI
 
 struct ContentView: View {
     
     var body: some View {
         TabView {
-            TodayView(viewModelToday: .init())
+            TodayView()
                 .tabItem {
                     Image(.tabBarToday)
                     Text("today.Tabbar.Title")
@@ -36,6 +35,8 @@ struct ContentView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     ContentView()
 }
+#endif

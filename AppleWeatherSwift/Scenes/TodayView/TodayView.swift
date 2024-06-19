@@ -8,31 +8,33 @@
 import SwiftUI
 
 struct TodayView: View {
-    // TODO: Make it private again, add init
-    @StateObject var viewModelToday: TodayViewModel
+    @StateObject private var todayViewModel = TodayViewModel()
     
     var body: some View {
         ZStack {
-            switch viewModelToday.state {
+            switch todayViewModel.state {
             case .loading:
                 LoadingView()
             case .missingLocation:
                 EnableLocationView()
-            case .succes(let currentResponse):
+            case .success(let currentResponse):
                 TodayViewContent(weather: currentResponse)
             case .error:
-                ErrorFetchingDataView()
+                ErrorFetchingDataView {
+                    todayViewModel.onRefresh()
+                }
             case .errorNetwork:
                 ErrorInternetConnectionView {
-                    viewModelToday.onRefresh()
+                    todayViewModel.onRefresh()
                 }
             }
         }
+        .environmentObject(todayViewModel)
     }
 }
 
 #if DEBUG
 #Preview {
-    TodayView(viewModelToday: .init())
+    TodayView()
 }
 #endif
