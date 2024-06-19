@@ -9,7 +9,6 @@ import Foundation
 import CoreLocation
 
 enum RouterWeatherManager {
-    // MARK: - GET
     case getCurrentWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
     case getForecast(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
 }

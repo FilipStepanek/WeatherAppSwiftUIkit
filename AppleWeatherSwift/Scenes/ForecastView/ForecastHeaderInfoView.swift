@@ -27,15 +27,13 @@ class ForecastHeaderInfoView: UICollectionReusableView {
     
     var dayIndex: Int {
         didSet {
-            // Update UI when dayIndex changes
             dayLabel.text = dayHeaderText()
             dateLabel.text = currentDate(for: dayIndex)
         }
     }
     
     override init(frame: CGRect) {
-        // Provide a stub implementation for the required initializer
-        self.dayIndex = 0 // Assign a default value to avoid crash
+        self.dayIndex = 0
         super.init(frame: frame)
         setupUI()
         setupConstraints()

@@ -74,7 +74,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     private let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        refreshControl.addTarget(ForecastViewController.self, action: #selector(handleRefresh), for: .valueChanged)
         return refreshControl
     }()
     

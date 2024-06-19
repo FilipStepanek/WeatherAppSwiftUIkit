@@ -40,7 +40,6 @@ class Network {
               let statusCode = HTTPStatusCode(rawValue: httpResponse.statusCode),
               router.acceptableStatusCodes?.contains(statusCode) ?? (HTTPStatusCode.ok == statusCode) else {
             
-            // TODO: lognout status code jako error
             throw NetworkError.invalidResponse
         }
         return try decoder.decode(T.self, from: data)

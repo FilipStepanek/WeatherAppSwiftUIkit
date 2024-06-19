@@ -10,7 +10,6 @@ import Foundation
 // Define HTTPStatusCode enum
 enum HTTPStatusCode: Int, Comparable {
     case ok = 200
-    // Here I can add more status codes. Now I need only one satus code.
     
     static func < (lhs: HTTPStatusCode, rhs: HTTPStatusCode) -> Bool {
         return lhs.rawValue < rhs.rawValue
@@ -20,22 +19,16 @@ enum HTTPStatusCode: Int, Comparable {
 // Define HTTPMethod enum
 enum HTTPMethod: String {
     case get = "GET"
-    case post = "POST"  //Info: Not used
-    case put = "PUT"    //Info: Not used
-    case delete = "DELETE"  //Info: Not used
-    // Add more HTTP methods as needed
 }
-// TODO: WHY? Is it necessary?
+
 // Define HTTPHeader enum
 enum HTTPHeader {
     enum ContentType: String {
         case json = "application/json"
-        // Add more content types as needed
     }
     
     enum HeaderField: String {
         case contentType = "Content-Type"
-        // Add more header fields as needed
     }
 }
 

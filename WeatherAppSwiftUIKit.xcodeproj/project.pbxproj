@@ -280,7 +280,7 @@
 			children = (
 				85B73FF82BBD265F001AF499 /* RouterNetwork */,
 				85D47C322BA8285500F9B53C /* Constants  */,
-				85C2B5EB2B26F1A100305CDF /* Model Data */,
+				85C2B5EB2B26F1A100305CDF /* ModelData */,
 				85C8A7A32B19BCBD00BCBC3A /* Managers */,
 				85C2B5E92B26F0B800305CDF /* Extensions */,
 			);
@@ -316,13 +316,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		85C2B5EB2B26F1A100305CDF /* Model Data */ = {
+		85C2B5EB2B26F1A100305CDF /* ModelData */ = {
 			isa = PBXGroup;
 			children = (
 				85C8A7B22B1CD65900BCBC3A /* ModelData.swift */,
 				85D47C252BA2D4A300F9B53C /* ResponseData.swift */,
 			);
-			path = "Model Data";
+			path = ModelData;
 			sourceTree = "<group>";
 		};
 		85C2B5EC2B26F1B900305CDF /* AnimationBacground */ = {
@@ -708,6 +708,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -743,6 +744,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

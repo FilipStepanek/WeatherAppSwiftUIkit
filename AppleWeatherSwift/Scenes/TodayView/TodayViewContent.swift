@@ -16,7 +16,7 @@ struct TodayViewContent: View {
     var body: some View {
         GeometryReader { proxy in
             ScrollView(showsIndicators: false) {
-//                let _ = print(proxy.size.height)
+                let _ = print(proxy.size.height)
                 VStack(alignment: .leading) {
                     Spacer(minLength: 70)
                     
@@ -57,7 +57,7 @@ struct TodayViewContent: View {
             TodayAnimationBackgroundView(weather: weather)
         )
         .sheet(isPresented: $viewModel.isShareSheetPresented) {
-            ShareSheetView(activityItems: [URL(string: Constants.openWeatherMapURL)])
+            ShareSheetView(activityItems: [URL(string: Constants.openWeatherMapURL) as Any])
                 .presentationDetents([.medium, .large])
         }
     }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TodayView: View {
-    // TODO: Make it private again, add init
     @StateObject private var todayViewModel = TodayViewModel()
     
     var body: some View {
