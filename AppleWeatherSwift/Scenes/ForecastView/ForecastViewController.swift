@@ -21,8 +21,8 @@ struct ForecastViewControllerWrapper: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: ForecastViewController, context: Context) {
-            uiViewController.updateWeatherData(weather: weather, weatherNow: weatherNow)
-        }
+        uiViewController.updateWeatherData(weather: weather, weatherNow: weatherNow)
+    }
 }
 
 class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -65,7 +65,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         return cv
     }()
     
-//MARK: chnage only private
+    //MARK: chnage only private
     private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -74,7 +74,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     private let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(ForecastViewController.self, action: #selector(handleRefresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         return refreshControl
     }()
     
@@ -135,15 +135,15 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func updateWeatherData(weather: ForecastResponse, weatherNow: CurrentResponse) {
-            if self.weather != weather || self.weatherNow != weatherNow {
-                self.weather = weather
-                self.weatherNow = weatherNow
-                
-                // Update grouped data and reload collection view
-                self.groupedData = self.groupForecastDataByDate()
-                self.collectionView.reloadData()
-            }
+        if self.weather != weather || self.weatherNow != weatherNow {
+            self.weather = weather
+            self.weatherNow = weatherNow
+            
+            // Update grouped data and reload collection view
+            self.groupedData = self.groupForecastDataByDate()
+            self.collectionView.reloadData()
         }
+    }
     
     func groupForecastDataByDate() -> [String: [ForecastResponse.ListResponse]] {
         var groupedData: [String: [ForecastResponse.ListResponse]] = [:]
@@ -176,7 +176,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegateFlowLayo
         return CGSize(width: width, height: 72)
     }
     
-//MARK: Difffable data sources chnage
+    //MARK: Difffable data sources chnage
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let dates = Array(groupedData.keys.sorted())
